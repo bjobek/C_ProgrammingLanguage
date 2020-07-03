@@ -1,6 +1,46 @@
 #include <stdio.h>
 #include <assert.h>
 
+
+
+//#define OUT 0 /outside a word 
+//#define IN  1 /inside a word 
+
+
+//Word count, one line, exc 1.11
+void one_word_one_line()
+{
+int c, nl, nw, nc, state;
+int OUT = 0;
+int IN = 1;
+state = OUT;
+nl = nw = nc = 0;
+while ((c = getchar()) != EOF) {
+    ++nc;
+    if (c == '\n')
+    {
+        ++nl;
+    }
+    if (c == ' ' || c == '\n' || c == '\t')
+    {
+        state = OUT;
+        printf("\n");
+    }
+    else if (state == OUT)
+    {
+        state = IN;
+        ++nw;
+        putchar(c);
+    }
+    else
+    {
+        putchar(c);
+    }
+
+}
+}
+
+
 //Count blanks,tabs and newlines
 int count_b_t_n()
 {
@@ -88,6 +128,6 @@ int main(void)
   //assert(sum != 0);   
    //printf("In Total: %d\n",sum);
    //blanks2blank();
-   replace_t_b_bslash();
-    return 0;
-}
+   //replace_t_b_bslash();
+  	one_word_one_line(); 
+    return 0;}
