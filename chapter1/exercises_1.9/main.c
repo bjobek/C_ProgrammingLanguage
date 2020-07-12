@@ -2,13 +2,14 @@
 
 //Exercise 1-16. Revise the main routine of the longest-line program so it will correctly print
 //the length of arbitrary long input lines, and as much as possible of the text.
-#define MAXLINE 1000; // maximum input line
+#define MAXLINE 1000 // maximum input line
 int print_longest_input_line();
-int getline(char s[], int lim);
+int get_line(char s[], int lim);
 void copy(char to[],char from[]);
 
 
 //Exercise 1-17. Write a program to print all input lines that are longer than 80 characters.
+int print_above_80_lines();
 
 //Exercise 1-18. Write a program to remove trailing blanks and tabs from each line of input,
 //and to delete entirely blank lines.
@@ -19,22 +20,50 @@ void copy(char to[],char from[]);
 
 int main()
 {
+    print_above_80_lines();
+   // print_longest_input_line();
+    return 0;
+}
+///////////////////////////////////////////////////
+int print_above_80_lines(){
 
+    int len; // current line length
+    int cap;// lower line length limit
+    char line[MAXLINE];
+    char line_buf[MAXLINE][MAXLINE];
+    int arr_count;
+    cap = 80;
+    arr_count=0;
+    while( (len = get_line(line,MAXLINE)) > 0 ){
+        
+        if(len > cap){
+            copy(line_buf[arr_count],line);
+            arr_count++;
+        }
+
+    }
+    if(arr_count > 0){
+    
+        for(int i = 0; i < arr_count; ++i){
+            printf("%s\n",line_buf[i]);
+            
+        }
+    }
     return 0;
 }
 
 
 
+///////////////////////////////////////////////////
 int print_longest_input_line()
 {
-int len; 
-int max;
+int len; //current line length 
+int max; // current max line length
 char line[MAXLINE];
 char longest[MAXLINE];
 
 max = 0;
-while( ( len = getline(line,MAXLINE)) > 0)
-    {
+while( ( len = get_line(line,MAXLINE)) > 0){
     if ( len > max) {
         max = len;
         copy(longest, line);
@@ -42,16 +71,35 @@ while( ( len = getline(line,MAXLINE)) > 0)
     }
 if (max > 0) // if there was a line
     printf("%s", longest);
+    printf("\n%d\n",max);
 return 0;
 }
 
-int getline(char s[], int lim)
+int get_line(char s[], int lim)
 {
+    int c, i;
 
+    for (i = 0; i < lim-1 && (c=getchar()) != EOF && c != '\n'; ++i)
+        s[i] = c;
+    if (c == '\n'){
+        s[i] = c;
+        ++i;
+    }
+    s[i] = '\0';
+    return i;
 }
+//Copy: copy from buf to buf
 void copy(char to[],char from[])
 {
-
+    int i;
+    i = 0;
+    while ((to[i] = from[i]) != '\0')
+        ++i;
 }
 
+// Append: buf to big buf
+int append(char to[], char from[])
+{
+   return 0; 
+}
 
