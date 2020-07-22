@@ -1,5 +1,6 @@
 #include <stdio.h> 
 #include <assert.h> 
+#include <string.h> 
 //Exercise 1-16. Revise the main routine of the longest-line program so it will correctly print
 //the length of arbitrary long input lines, and as much as possible of the text.
 #define MAXLINE 1000 // maximum input line
@@ -51,11 +52,40 @@ return 1;
 
 //Exercise 1-19. Write a function reverse(s) that reverses the character string s . Use it to
 //write a program that reverses its input a line at a time.
+char* rev_string(char* str){
+    const int max = 100;
+    int iter=0;
+    int len = 0;
+    char line[max];
 
+    while(str[iter] != '\0' && len < max){
+        ++len;
+        ++iter;
+    }
+    printf("%d \n",len);
+    for(int i = 0; i < len; ++i){
+        char c = str[iter];
+        iter--;
+        if(c == '\0'){
+            line[len]=c;
+           // printf("char equals nullstring \n");
+        }
+        else{
+            line[i]=c;
+            //printf("char added to tmpbuf \n");
+        }
+    }
+    //printf("%s \n",line);
+    str=line;
+    return str;
+}
 
 int main()
 {
-   exec118();
+    char* str="yoyoyoyoyoyoyo";
+    str=rev_string(str);
+    printf("%s\n",str);
+   // exec118();
    // print_above_80_lines();
    // print_longest_input_line();
     return 0;
