@@ -1,5 +1,5 @@
 #include <stdio.h> 
-
+#include <assert.h> 
 //Exercise 1-16. Revise the main routine of the longest-line program so it will correctly print
 //the length of arbitrary long input lines, and as much as possible of the text.
 #define MAXLINE 1000 // maximum input line
@@ -13,14 +13,50 @@ int print_above_80_lines();
 
 //Exercise 1-18. Write a program to remove trailing blanks and tabs from each line of input,
 //and to delete entirely blank lines.
-        
+
+// check if in a word
+// after being in a word, copy to new buffer
+int exec118(){
+char line[MAXLINE];
+int len;
+
+while (( len = get_line(line,MAXLINE)) > 0){
+    int tmp=len;
+    int c;
+    while(tmp > 0){
+          assert(line[len]=='\0');
+          c = line[tmp-2];
+
+          if(c == '\t' || c == ' '){
+            line[tmp-1]='\0';
+            line[tmp-2]='\n';
+            assert(len > 0);
+            len--;
+            tmp--;
+            printf("Trailing blank or tab detected\n");
+            printf("Len reduced to %d\n",len);
+            
+          }
+          else
+          {
+          tmp = -1;
+          printf("%s\n",line);
+          }
+    }
+
+
+}
+return 1;
+}
+
 //Exercise 1-19. Write a function reverse(s) that reverses the character string s . Use it to
 //write a program that reverses its input a line at a time.
 
 
 int main()
 {
-    print_above_80_lines();
+   exec118();
+   // print_above_80_lines();
    // print_longest_input_line();
     return 0;
 }
