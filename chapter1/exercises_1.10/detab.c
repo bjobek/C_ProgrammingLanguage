@@ -3,10 +3,10 @@
 #include <string.h>
 
 #define MAXLINE 1000
-
+#define TAB 4
 int detab(void);
 int get_line(char s[], int lim);
-
+int get_spaces(int pos, int tabw );
 int main(void){
     detab();
  
@@ -14,17 +14,21 @@ int main(void){
 }
 
 int get_line(char s[], int lim){
+    
     int c;
     int i;
-
     for(i = 0; i < lim-1 && (c = getchar()) != EOF && c != '\n'; ++i)
         s[i] = c;
+        
     if(c == '\n'){
         s[i]=c;
         ++i;
     }
     s[i] = '\0';
     return i;
+}
+int get_spaces(int pos, int tabw){
+    return tabw - (pos % tabw);
 }
 int detab(void){
 
@@ -33,28 +37,29 @@ int detab(void){
     char c;
     while(( len = get_line(line,MAXLINE)) > 0){
         int i = 0;
+        int j = 0;
         char tmpArr[MAXLINE];
-        printf("len: %d \n",len);    
+       // printf("len: %d \n",len);    
         while((c = line[i]) != '\0' && i <= len){
             if(c == '\t'){
-                tmpArr[i]=' ';
-                tmpArr[i+1]=' '; 
-                tmpArr[i+2]=' ';
-                tmpArr[i+3]=' ';
-                i=i+4;
-                
-                assert((len=len+4) < MAXLINE);
-                
-                printf("Tab replaced with 4 spaces \n");
-
+                int spaces = get_spaces(j, TAB);
+                printf("pos: %d , spaces: %d \n", j , spaces);
+                assert(spaces > 0 && spaces <= TAB);
+                while(spaces > 0){
+                tmpArr[j] = ' ';
+                ++j;
+                --spaces;
+               // printf("Added spaces \n"); 
+                }
             }
             else{
-                tmpArr[i]=c;
-                ++i;
-                printf("char : %c , addr : %ud,",c,&c);
+                tmpArr[j]=c;
+                ++j;
+               // printf("%c \n",c);
             }
+            ++i;
         }    
-            
+        tmpArr[j]='\0';    
             
     printf("%s \n",tmpArr);         
         }
